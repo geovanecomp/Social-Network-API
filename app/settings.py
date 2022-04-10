@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # External Apps
     'rest_framework',
+    'posterr_api.apps.PosterrApiConfig',
 ]
 
 MIDDLEWARE = [
