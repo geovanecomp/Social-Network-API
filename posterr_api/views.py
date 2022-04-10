@@ -1,7 +1,4 @@
 from rest_framework import viewsets
-
-
-from posterr_api import serializers
 from posterr_api import models
 
 
