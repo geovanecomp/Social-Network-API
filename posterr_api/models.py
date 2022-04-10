@@ -1,6 +1,37 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
-from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+
+
+class UserManager(BaseUserManager):
+    """Manager for user profiles"""
+
+    def create_user(self, name, email, username, password=None):
+        """Create a new user profile"""
+
+        if not name:
+            raise ValueError('User must have a name')
+        if not email:
+            raise ValueError('User must have an email address')
+        if not username:
+            raise ValueError('User must have a username')
+
+        email = self.normalize_email(email)
+        user = self.model(name=name, email=email, username=username)
+
+        user.set_password(password)
+        user.save(using=self._db)
+
+        return user
+
+    def create_superuser(self, name, email, username, password):
+        """Create and save a new superuser"""
+        user = self.create_user(name, email, username, password)
+
+        user.is_superuser = True
+        user.is_staff = True
+        user.save(using=self._db)
+
+        return user
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -12,6 +43,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     image = models.ImageField(upload_to='images/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    objects = UserManager()
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['name', 'email', 'password']
