@@ -1,4 +1,15 @@
+asgiref==3.5.0
 Django==4.0.3
 djangorestframework==3.13.1
-psycopg2==2.9.3
+jedi==0.18.1
+packaging==21.3
+parso==0.8.3
 Pillow==9.1.0
+psycopg2==2.9.3
+pudb==2022.1.1
+Pygments==2.11.2
+pyparsing==3.0.8
+pytz==2022.1
+sqlparse==0.4.2
+urwid==2.1.2
+urwid-readline==0.13
