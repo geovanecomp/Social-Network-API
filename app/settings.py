@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # External Apps
     'rest_framework',
+    'rest_framework.authtoken',
     'posterr_api.apps.PosterrApiConfig',
 ]
 
