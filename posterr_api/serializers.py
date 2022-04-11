@@ -34,3 +34,11 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
 
         return super().update(instance, validated_data)
+
+
+class PostSerializer(serializers.ModelSerializer):
+    """Serializes a post object"""
+
+    class Meta:
+        model = models.Post
+        fields = ('id', 'user', 'text', 'created_at')
