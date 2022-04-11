@@ -70,3 +70,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         """Return string representation of our user"""
         return self.username
+
+
+class Post(models.Model):
+    user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
+    text = models.CharField(max_length=777, null=False)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
