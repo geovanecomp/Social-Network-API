@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.core.validators import RegexValidator
 
 
 class UserManager(BaseUserManager):
@@ -36,13 +37,16 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """Database model for users in the system"""
-    name = models.CharField(max_length=150)
-    username = models.CharField(max_length=14, unique=True)
-    password = models.CharField(max_length=128)
-    email = models.EmailField(max_length=255, unique=True)
+
+    alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
+
+    name = models.CharField(max_length=150, null=False, validators=[alphanumeric])
+    username = models.CharField(max_length=14, unique=True, null=False, validators=[alphanumeric])
+    password = models.CharField(max_length=128, null=False)
+    email = models.EmailField(max_length=255, null=False, unique=True)
     image = models.ImageField(upload_to='images/')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
