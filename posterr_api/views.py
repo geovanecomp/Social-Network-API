@@ -3,7 +3,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from posterr_api import paginations
 from posterr_api import serializers
@@ -17,8 +17,9 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnProfile,)
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter,)
     search_fields = ('name', 'email', 'username',)
+    ordering_fields = ['name', 'email']
 
 
 class UserLoginApiView(ObtainAuthToken):
@@ -29,7 +30,7 @@ class UserLoginApiView(ObtainAuthToken):
 class PostViewSet(viewsets.ModelViewSet):
     """Handle creating and updating user posts"""
     serializer_class = serializers.PostSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = models.Post.objects.all()
 
 
@@ -38,5 +39,7 @@ class FeedViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = paginations.StandardResultsSetPagination
     serializer_class = serializers.PostSerializer
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('text',)
     queryset = models.Post.objects.order_by('created_at').reverse()
