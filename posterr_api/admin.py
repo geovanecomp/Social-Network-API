@@ -4,3 +4,4 @@ from posterr_api import models
 
 
 admin.site.register(models.User)
+admin.site.register(models.Post)
