@@ -6,9 +6,8 @@ from posterr_api import views
 
 
 router = DefaultRouter()
-router.register('user', views.UserViewSet)
-router.register('post', views.PostViewSet)
-router.register('feed', views.FeedViewSet, basename='feed')
+router.register('user', views.UserViewSet, basename='user')
+router.register('homepage', views.HomepageViewSet, basename='homepage')
 
 urlpatterns = [
     path('login/', views.UserLoginApiView.as_view()),
