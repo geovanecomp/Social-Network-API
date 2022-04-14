@@ -39,8 +39,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     """Database model for users in the system"""
 
     alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
+    alphanumeric_and_space = RegexValidator(r'^[0-9a-zA-Z ]*$', 'Only alphanumeric characters are allowed.')
 
-    name = models.CharField(max_length=150, null=False, validators=[alphanumeric])
+    name = models.CharField(max_length=150, null=False, validators=[alphanumeric_and_space])
     username = models.CharField(max_length=14, unique=True, null=False, validators=[alphanumeric])
     password = models.CharField(max_length=128, null=False)
     email = models.EmailField(max_length=255, null=False, unique=True)
