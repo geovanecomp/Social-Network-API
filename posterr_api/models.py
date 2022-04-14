@@ -75,7 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Post(models.Model):
     """Database model for Posts in the system. Post are users sharing texts."""
     user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
-    another_user_post = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+    another_user_post = models.ForeignKey('self', null=True, blank=True, on_delete=models.PROTECT)
     text = models.CharField(max_length=777, null=False)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
