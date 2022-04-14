@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.User
-        fields = ('id', 'name', 'email', 'username', 'password', 'created_at')
+        fields = ('id', 'name', 'email', 'username', 'password', 'followers', 'created_at')
         extra_kwargs = {
             'password': {
                 'write_only': True,
@@ -21,10 +21,14 @@ class UserSerializer(serializers.ModelSerializer):
         user = models.User(
             name=validated_data['name'],
             email=validated_data['email'],
-            username=validated_data['username']
+            username=validated_data['username'],
         )
         user.set_password(validated_data['password'])
         user.save()
+
+        # M2M relationship requires having a user instance saved first.
+        followers = validated_data['followers']
+        user.followers.add(*followers)
         return user
 
     def update(self, instance, validated_data):
