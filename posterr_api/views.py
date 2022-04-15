@@ -10,6 +10,7 @@ from posterr_api import serializers
 from posterr_api import models
 from posterr_api import permissions
 
+
 # Full User CRUD and also the User Search box.
 class UserViewSet(viewsets.ModelViewSet):
     """Handle creating and updating user profiles"""
