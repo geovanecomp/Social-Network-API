@@ -38,15 +38,18 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """Database model for users in the system"""
 
+    # Validators to prevent incorrect texts to be stored into the DB.
     alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
     alphanumeric_and_space = RegexValidator(r'^[0-9a-zA-Z ]*$', 'Only alphanumeric characters are allowed.')
 
+    # A user can follow many users and can be also follower by many users (M2M relationship)
     followers = models.ManyToManyField('self')
     name = models.CharField(max_length=150, null=False, validators=[alphanumeric_and_space])
     username = models.CharField(max_length=14, unique=True, null=False, validators=[alphanumeric])
     password = models.CharField(max_length=128, null=False)
     email = models.EmailField(max_length=255, null=False, unique=True)
     image = models.ImageField(upload_to='images/')
+    # created_at can be used in the Frontend as "Date joined Posterr ...".
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     is_active = models.BooleanField(default=True)
@@ -77,6 +80,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Post(models.Model):
     """Database model for Posts in the system. Post are users sharing texts."""
     user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
+    # Reference to another user's post.
     another_user_post = models.ForeignKey('self', null=True, blank=True, on_delete=models.PROTECT)
     text = models.CharField(max_length=777, null=False)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
