@@ -1,4 +1,4 @@
-# Social-Network-API
+# Social-Network-API: Geovane Pacheco da Rocha
 This is an API Built-in Django Rest Framework using the latest Django version (4.0) for a Social Network such as Twitter. This is also part of the _Strider_ hiring process where an API for two pages must be built in 7 days. In my case, due to the work, I had less time, but I was able to implement almost everything with some cool bonus features.
 
 I am going present what was done now. For questions, critiques, or compliments, please send me an email: geovane.pacheco99@gmail.com.
