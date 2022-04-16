@@ -43,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     alphanumeric_and_space = RegexValidator(r'^[0-9a-zA-Z ]*$', 'Only alphanumeric characters are allowed.')
 
     # A user can follow many users and can be also follower by many users (M2M relationship)
-    followers = models.ManyToManyField('self')
+    followers = models.ManyToManyField('self', blank=True)
     name = models.CharField(max_length=150, null=False, validators=[alphanumeric_and_space])
     username = models.CharField(max_length=14, unique=True, null=False, validators=[alphanumeric])
     password = models.CharField(max_length=128, null=False)
