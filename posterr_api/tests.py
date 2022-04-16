@@ -34,7 +34,7 @@ class UserViewSetTests(TestCase):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
 
-        response = self.client.get(reverse('user-list'))
+        response = self.client.get(reverse('api:user-list'))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertQuerysetEqual(response.data, serializer.data)
