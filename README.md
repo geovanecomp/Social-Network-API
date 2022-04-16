@@ -109,3 +109,26 @@ Besides that, validators were also created to meet the requirements.
 <br />
 - For Technology: Django and Django Rest Framework in the Backend to build the server and APIs. ReactJS with CSS3/SASS in the Frontend. For the Database I would avoid SQLite as much as possible, so that is why I started using Postgres.
 - For Infrastructure: Amazon Web Service (AWS) would definitely be my choice for infrastructure. Besides that, having Docker and Docker Compose is something that I always start any project using it. Finally, having CI (Continuous Integration) enabled would help a lot.
+
+## Instructions to execute it locally
+This project uses Docker (version 20.10.13) and Docker compose (version 2.3.3), so, due to that, the local execution is pretty easy.
+
+Just execute:
+```
+docker compose -f docker-compose.development.yml up --build
+```
+
+As any Django Project, make sure to prepare your Database in the first execution also running the migrations in the `web` docker container:
+```
+docker compose -f docker-compose.development.yml exec web bash
+python manage.py makemigrations posterr_api
+python manage.py migrate
+```
+
+_Sometimes you can get some port conflicts with the DB during the first initialization, feel free to try again later._
+
+### How to execute tests
+```
+docker compose -f docker-compose.development.yml exec web bash
+./manage.py test
+```
